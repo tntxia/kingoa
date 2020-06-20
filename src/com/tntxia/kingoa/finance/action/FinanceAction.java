@@ -555,7 +555,10 @@ import java.math.BigDecimal;
 	   }
 	   DBConnection db = new DBConnection();
 	   ResultSet rs = db.executeQuery(sql);
-	   BigDecimal total = rs.getBigDecimal("total");
+	   BigDecimal total = null;
+	   if (rs.next()) {
+		   total = rs.getBigDecimal("total");
+	   }
 	   Map<String,Object> result = new HashMap<String,Object>();
 	   result.put("total", total);
 	   WebUtils.writeJson(response, result);
