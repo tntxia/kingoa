@@ -545,9 +545,9 @@ import java.math.BigDecimal;
 	   List<String> userRightList = (List<String>) session.getAttribute("userRightList");
 	   // 不同权限的用户
 	   if (userRightList.contains("fkview")) {
-		   sql += " where wtfk like '" + deptjb + "%'";
+		   sql += " and wtfk like '" + deptjb + "%'";
 	   } else {
-		   sql += " where remark = '" + username+"'";
+		   sql += " and remark = '" + username+"'";
 	   }
 	   String coname = request.getParameter("coname");
 	   if (StringUtils.isNotEmpty(coname)) {
