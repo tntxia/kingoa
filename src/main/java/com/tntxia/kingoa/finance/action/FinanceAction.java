@@ -538,7 +538,10 @@ import java.math.BigDecimal;
     */
    @SuppressWarnings("unchecked")
    public ModelAndView paymentStatistist(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	   String sql = "select sum(htmoney) total from payment where states!='草拟' and states!='已付全款' and states!='退货待收款' and states != '退货已收款'";
+	   String sql = "select sum(payment.htmoney) totalPaid," + 
+	   		"(select SUM(cgpro.selljg * num) from cgpro where cgpro.ddid = payment.orderform) total," + 
+	   		"(select SUM(selljg * num) from cgpro where ddid in (select id from procure where l_spqk = '已入库' ) and  cgpro.ddid = payment.orderform) totalIn" + 
+	   		" from payment";
 	   HttpSession session = request.getSession();
 	   String username = (String) session.getAttribute("username");
 	   String deptjb = (String) session.getAttribute("deptjb");
