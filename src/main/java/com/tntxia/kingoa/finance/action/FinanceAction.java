@@ -540,6 +540,8 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
 	   String epro = request.getParameter("epro");
 	   String co_number = request.getParameter("co_number");
 	   String sub = request.getParameter("sub");
+	   String sdate = request.getParameter("sdate");
+	   String edate = request.getParameter("edate");
 	   
 	   if (StringUtils.isNotEmpty(coname)) {
 		   sqlWhere += " and payment.supplier like '%" + coname + "%'";
@@ -553,6 +555,16 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
 	   if (StringUtils.isNotEmpty(sub)) {
 		   sqlWhere += " and payment.sub like '%"+sub+"%'";
 		 }
+	   
+
+if(StringUtils.isNotEmpty(sdate)){
+	sqlWhere += " and  payment.sjfkdate>='"+sdate+"'";
+}
+
+if(StringUtils.isNotEmpty(edate)){
+	sqlWhere += " and  payment.sjfkdate<='"+edate+"'";
+}
+
 	   
 	   Map<String,Object> result = new HashMap<String,Object>();
 	   
