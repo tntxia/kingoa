@@ -2,7 +2,8 @@
  
  import com.tntxia.db.DBConnection;
  import com.tntxia.db.DBUtil;
- import com.tntxia.oa.finance.dao.FinanceDao;
+import com.tntxia.kingoa.utils.WebUtils;
+import com.tntxia.oa.finance.dao.FinanceDao;
  import com.tntxia.oa.finance.entity.CreditDebit;
  import com.tntxia.oa.finance.entity.Gathering;
  import com.tntxia.oa.sale.dao.SaleDao;
@@ -14,7 +15,7 @@
  import com.tntxia.oa.system.entity.FinanceAccountDetail;
  import com.tntxia.oa.util.CommonAction;
  import com.tntxia.oa.util.DateUtil;
-import com.tntxia.oa.util.WebUtils;
+
 
 import java.math.BigDecimal;
  import java.sql.ResultSet;
@@ -537,6 +538,7 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
 		   sqlWhere += " and remark = '" + username+"'";
 	   }
 	   String coname = request.getParameter("coname");
+	   coname = WebUtils.unescape(coname);
 	   
 	   String epro = request.getParameter("epro");
 	   String co_number = request.getParameter("co_number");
