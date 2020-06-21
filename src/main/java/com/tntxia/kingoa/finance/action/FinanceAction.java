@@ -19,9 +19,7 @@ import com.tntxia.oa.util.WebUtils;
 import java.math.BigDecimal;
  import java.sql.ResultSet;
  import java.text.NumberFormat;
- import java.text.SimpleDateFormat;
  import java.util.ArrayList;
- import java.util.Date;
  import java.util.HashMap;
  import java.util.List;
  import java.util.Map;
@@ -108,9 +106,6 @@ import java.math.BigDecimal;
      nf.setMaximumFractionDigits(4);
      nf.setMinimumFractionDigits(4);
      
-     SimpleDateFormat simple = new SimpleDateFormat(
-         "yyyy-MM-dd");
-     String currentDate = simple.format(new Date());
  
      int intPageSize = 500;
      String strPage = request.getParameter("page");
@@ -171,11 +166,11 @@ import java.math.BigDecimal;
        double totle = 0.0D;
        String sale_man = sqlRst.getString("sale_man");
        resultMap.put("sale_man", sale_man);
-       String thb = "RMB";
+
        String strSQLpro = "select num,salejg,pricehb from th_pro where  ddid='" + 
          fyid + "'";
        ResultSet prs = einfodb.executeQuery(strSQLpro);
-       int tmpi = 0;
+       
        while (prs.next()) {
          double num = 0.0D;
          String tmpnum = prs.getString("num");
@@ -208,8 +203,7 @@ import java.math.BigDecimal;
          
          double tprice = num * price * shl / chl * -1.0D;
          totle += tprice;
-         thb = shb;
-         tmpi++;
+         
        } 
        double sub1 = totle - s;
        String se = "";
@@ -266,12 +260,10 @@ import java.math.BigDecimal;
      
      String totle = request.getParameter("totle");
      String hb = request.getParameter("hb");
-     String sub1 = request.getParameter("sub1");
+     
      String id1 = request.getParameter("id");
-     String dept = (String)session.getAttribute("dept");
-     String username = (String)session.getAttribute("username");
      String restrain_name = (String)session.getAttribute("restrain_name");
-     String deptjb = (String)session.getAttribute("deptjb");
+     
      String modsql = "select * from restrain where restrain_name='" + 
        restrain_name + "'";
      ResultSet rsmod = einfodb.executeQuery(modsql);
@@ -281,9 +273,7 @@ import java.math.BigDecimal;
      double t7 = 0.0D;
      
      if (rsmod.next()) {
-       String skmod = rsmod.getString("skmod").trim();
-       String skdel = rsmod.getString("skdel").trim();
-       String r_wlz_add = rsmod.getString("r_wlz_add").trim();
+       
        String sql = "select gathering.*,th_table.sub,th_table.remarks,th_table.payway from gathering_refund gathering left outer join th_table on gathering.orderform = th_table.number where gathering.id='" + 
          id1 + "'";
        ResultSet rs = einfodb.executeQuery(sql);
@@ -293,20 +283,14 @@ import java.math.BigDecimal;
        }
        
        t2 = rs.getString(2);
-       String t3 = rs.getString(3);
+       
        String contact = rs.getString("orderform");
-       String t5 = rs.getString(5);
-       double t6 = rs.getDouble(6);
+      
        t7 = rs.getDouble(7);
        String coname = rs.getString(8);
-       double bankFee = rs.getDouble(9);
-       String t10 = rs.getString(10);
-       String t11 = rs.getString(11);
-       String t12 = rs.getString(12);
-       Date t13 = rs.getDate(13);
-       String t14 = rs.getString(14);
        
-       String i_man = rs.getString("i_man");
+       String t11 = rs.getString(11);
+       
        String sale_man = rs.getString("sale_man");
        String sale_dept = rs.getString("sale_dept");
        String co_number = rs.getString("co_number");
@@ -366,7 +350,8 @@ import java.math.BigDecimal;
  
  
    
-   public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletResponse response) throws Exception {
+   @SuppressWarnings("rawtypes")
+public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletResponse response) throws Exception {
      String number = request.getParameter("number");
      String type = request.getParameter("type");
      if (type.equals("1")) {
@@ -413,7 +398,7 @@ import java.math.BigDecimal;
        if (g_je1 != null)
          g_je = Double.parseDouble(g_je1); 
        double g_sje = g_je + 0.0D;
-       double spje = 0.0D;
+       
        if (t != null) {
          for (int i = 0; i < t.length; i++) {
            double totle = 0.0D;
@@ -428,14 +413,13 @@ import java.math.BigDecimal;
            String fyid = rs.getString("fyid");
            String invoice = rs.getString("invoice");
            double smoney = rs.getDouble("smoney");
-           double qt_fy = rs.getDouble("ymoney");
-           double fy = rs.getDouble("bank");
+           
            String salesman = rs.getString("note");
-           double shl = 0.0D;
+           
            String strSQLpro = "select num,salejg,pricehb from ddpro where  ddid='" + 
              fyid + "'";
            ResultSet prs = db.executeQuery(strSQLpro);
-           int tmpi = 0;
+           
            while (prs.next()) {
              double num = 0.0D;
              String tmpnum = prs.getString("num");
@@ -445,13 +429,13 @@ import java.math.BigDecimal;
              String tmpprice = prs.getString("salejg");
              if (tmpprice != null)
                price = Double.parseDouble(tmpprice); 
-             String shb = prs.getString("pricehb");
+             
              double j_m = num * price, tprice = 0.0D;
              tprice = j_m;
              totle += tprice;
-             tmpi++;
+             
            } 
-           totle = totle;
+           
            double j_m1 = smoney, ts1 = 0.0D;
            ts1 = j_m1;
            double ts = totle - ts1;
@@ -538,32 +522,54 @@ import java.math.BigDecimal;
     */
    @SuppressWarnings("unchecked")
    public ModelAndView paymentStatistist(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	   String sql = "select sum(payment.htmoney) totalPaid," + 
-	   		"(select SUM(cgpro.selljg * num) from cgpro where cgpro.ddid = payment.orderform) total," + 
-	   		"(select SUM(selljg * num) from cgpro where ddid in (select id from procure where l_spqk = '已入库' ) and  cgpro.ddid = payment.orderform) totalIn" + 
-	   		" from payment";
+	   
 	   HttpSession session = request.getSession();
+	   
+	   String sqlWhere = " where states!='草拟' and states!='已付全款' and states!='退货待收款' and states != '退货已收款'";
 	   String username = (String) session.getAttribute("username");
 	   String deptjb = (String) session.getAttribute("deptjb");
 	   List<String> userRightList = (List<String>) session.getAttribute("userRightList");
 	   // 不同权限的用户
 	   if (userRightList.contains("fkview")) {
-		   sql += " and wtfk like '" + deptjb + "%'";
+		   sqlWhere += " and wtfk like '" + deptjb + "%'";
 	   } else {
-		   sql += " and remark = '" + username+"'";
+		   sqlWhere += " and remark = '" + username+"'";
 	   }
 	   String coname = request.getParameter("coname");
 	   if (StringUtils.isNotEmpty(coname)) {
-		   sql += " and coname like '%" + coname + "%'";
+		   sqlWhere += " and coname like '%" + coname + "%'";
 	   }
+	   
+	   Map<String,Object> result = new HashMap<String,Object>();
+	   
+	   String sql = "select sum(htmoney) totalPaid from payment";
 	   DBConnection db = new DBConnection();
-	   ResultSet rs = db.executeQuery(sql);
+	   ResultSet rs = db.executeQuery(sql + sqlWhere);
+	   BigDecimal totalPaid = null;
+	   if (rs.next()) {
+		   totalPaid = rs.getBigDecimal("total");
+	   }
+	   rs.close();
+	   result.put("totalPaid", totalPaid);
+	   
+	   sql = "select sum(selljg * num) total from cgpro where ddid in (select orderform from payment " + sqlWhere + ")";
 	   BigDecimal total = null;
+	   rs = db.executeQuery(sql);
 	   if (rs.next()) {
 		   total = rs.getBigDecimal("total");
 	   }
-	   Map<String,Object> result = new HashMap<String,Object>();
+	   rs.close();
 	   result.put("total", total);
+	   
+	   sql = "select sum(selljg * num) total from cgpro where ddid in (select orderform from payment " + sqlWhere + ")";
+	   BigDecimal stotal = null;
+	   rs = db.executeQuery(sql);
+	   if (rs.next()) {
+		   stotal = rs.getBigDecimal("total");
+	   }
+	   rs.close();
+	   result.put("stotal", stotal);
+	   
 	   WebUtils.writeJson(response, result);
 	   return null;
    }
