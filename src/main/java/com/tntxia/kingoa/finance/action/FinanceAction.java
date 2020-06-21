@@ -571,7 +571,7 @@ if(StringUtils.isNotEmpty(edate)){
 	   String sql = "select sum(htmoney) total from payment";
 	   DBConnection db = new DBConnection();
 	   ResultSet rs = db.executeQuery(sql + sqlWhere);
-	   System.out.print("payment statistist," + sql + sqlWhere);
+	   System.out.println("payment statistist,,,,,," + sql + sqlWhere);
 	   BigDecimal totalPaid = null;
 	   if (rs.next()) {
 		   totalPaid = rs.getBigDecimal("total");
