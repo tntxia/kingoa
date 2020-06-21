@@ -536,13 +536,22 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
 		   sqlWhere += " and remark = '" + username+"'";
 	   }
 	   String coname = request.getParameter("coname");
+	   
+	   String epro = request.getParameter("epro");
 	   String co_number = request.getParameter("co_number");
+	   String sub = request.getParameter("sub");
 	   
 	   if (StringUtils.isNotEmpty(coname)) {
-		   sqlWhere += " and coname like '%" + coname + "%'";
+		   sqlWhere += " and payment.supplier like '%" + coname + "%'";
 	   }
-	   if (co_number!=null && co_number.length() > 0) {
+	   if(StringUtils.isNotEmpty(epro)){
+		   sqlWhere += " and  payment.contract in (select number from procure where id in (select ddid from cgpro where epro like '%"+epro+"%') )";
+		}
+	   if (StringUtils.isNotEmpty(co_number)) {
 		   sqlWhere += " and payment.contract like '%"+co_number+"%'";
+		 }
+	   if (StringUtils.isNotEmpty(sub)) {
+		   sqlWhere += " and payment.sub like '%"+sub+"%'";
 		 }
 	   
 	   Map<String,Object> result = new HashMap<String,Object>();
