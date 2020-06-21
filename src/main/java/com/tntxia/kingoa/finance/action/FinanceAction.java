@@ -524,6 +524,7 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
    public ModelAndView paymentStatistist(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	   
 	   HttpSession session = request.getSession();
+	   request.setCharacterEncoding("GBK");
 	   
 	   String sqlWhere = " where states!='草拟' and states!='已付全款' and states!='退货待收款' and states != '退货已收款'";
 	   String username = (String) session.getAttribute("username");
