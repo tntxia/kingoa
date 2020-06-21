@@ -542,7 +542,7 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
 	   
 	   Map<String,Object> result = new HashMap<String,Object>();
 	   
-	   String sql = "select sum(htmoney) totalPaid from payment";
+	   String sql = "select sum(htmoney) total from payment";
 	   DBConnection db = new DBConnection();
 	   ResultSet rs = db.executeQuery(sql + sqlWhere);
 	   BigDecimal totalPaid = null;
