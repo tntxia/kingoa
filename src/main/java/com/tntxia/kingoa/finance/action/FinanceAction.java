@@ -536,9 +536,14 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
 		   sqlWhere += " and remark = '" + username+"'";
 	   }
 	   String coname = request.getParameter("coname");
+	   String co_number = request.getParameter("co_number");
+	   
 	   if (StringUtils.isNotEmpty(coname)) {
 		   sqlWhere += " and coname like '%" + coname + "%'";
 	   }
+	   if (co_number!=null && co_number.length() > 0) {
+		   sqlWhere += " and payment.contract like '%"+co_number+"%'";
+		 }
 	   
 	   Map<String,Object> result = new HashMap<String,Object>();
 	   
@@ -561,7 +566,7 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
 	   rs.close();
 	   result.put("total", total);
 	   
-	   sql = "select sum(selljg * num) total from cgpro where ddid in (select orderform from payment " + sqlWhere + ")";
+	   sql = "select sum(selljg * num) total from cgpro where ddid in (select orderform from payment " + sqlWhere + ") and  ddid in (select id from procure where l_spqk = '已入库' )";
 	   BigDecimal stotal = null;
 	   rs = db.executeQuery(sql);
 	   if (rs.next()) {
