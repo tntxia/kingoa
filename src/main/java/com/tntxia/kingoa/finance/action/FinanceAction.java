@@ -603,7 +603,6 @@ if(StringUtils.isNotEmpty(edate)){
 		   rs.close();
 		   result.put("stotal", stotal);
 		   result.put("success", true);
-		   WebUtils.writeJson(response, result);
 	   } catch(Exception ex) {
 		   result.put("success", false);	
 		   result.put("msg", ex.getMessage());
