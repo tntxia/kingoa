@@ -571,36 +571,50 @@ if(StringUtils.isNotEmpty(edate)){
 	   
 	   Map<String,Object> result = new HashMap<String,Object>();
 	   
-	   String sql = "select sum(htmoney) total from payment";
-	   DBConnection db = new DBConnection();
-	   ResultSet rs = db.executeQuery(sql + sqlWhere);
-	   System.out.println("payment statistist,,,,,," + sql + sqlWhere);
-	   BigDecimal totalPaid = null;
-	   if (rs.next()) {
-		   totalPaid = rs.getBigDecimal("total");
-	   }
-	   rs.close();
-	   result.put("totalPaid", totalPaid);
+	   DBConnection db = null;
 	   
-	   sql = "select sum(selljg * num) total from cgpro where ddid in (select orderform from payment " + sqlWhere + ")";
-	   BigDecimal total = null;
-	   rs = db.executeQuery(sql);
-	   if (rs.next()) {
-		   total = rs.getBigDecimal("total");
+	   try {
+		   String sql = "select sum(htmoney) total from payment";
+		   db = new DBConnection();
+		   ResultSet rs = db.executeQuery(sql + sqlWhere);
+		   System.out.println("payment statistist,,,,,," + sql + sqlWhere);
+		   BigDecimal totalPaid = null;
+		   if (rs.next()) {
+			   totalPaid = rs.getBigDecimal("total");
+		   }
+		   rs.close();
+		   result.put("totalPaid", totalPaid);
+		   
+		   sql = "select sum(selljg * num) total from cgpro where ddid in (select orderform from payment " + sqlWhere + ")";
+		   BigDecimal total = null;
+		   rs = db.executeQuery(sql);
+		   if (rs.next()) {
+			   total = rs.getBigDecimal("total");
+		   }
+		   rs.close();
+		   result.put("total", total);
+		   
+		   sql = "select sum(selljg * num) total from cgpro where ddid in (select orderform from payment " + sqlWhere + ") and  ddid in (select id from procure where l_spqk = '已入库' )";
+		   BigDecimal stotal = null;
+		   rs = db.executeQuery(sql);
+		   if (rs.next()) {
+			   stotal = rs.getBigDecimal("total");
+		   }
+		   rs.close();
+		   result.put("stotal", stotal);
+		   result.put("success", true);
+		   WebUtils.writeJson(response, result);
+	   } catch(Exception ex) {
+		   result.put("success", false);	
+		   result.put("msg", ex.getMessage());
+	   } finally {
+		   if (db != null) {
+			   db.close();
+		   }
 	   }
-	   rs.close();
-	   result.put("total", total);
-	   
-	   sql = "select sum(selljg * num) total from cgpro where ddid in (select orderform from payment " + sqlWhere + ") and  ddid in (select id from procure where l_spqk = '已入库' )";
-	   BigDecimal stotal = null;
-	   rs = db.executeQuery(sql);
-	   if (rs.next()) {
-		   stotal = rs.getBigDecimal("total");
-	   }
-	   rs.close();
-	   result.put("stotal", stotal);
 	   
 	   WebUtils.writeJson(response, result);
+	   
 	   return null;
    }
    
