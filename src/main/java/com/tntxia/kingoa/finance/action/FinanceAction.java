@@ -560,13 +560,13 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
 		 }
 	   
 
-if(StringUtils.isNotEmpty(sdate)){
-	sqlWhere += " and  payment.sjfkdate>='"+sdate+"'";
-}
-
-if(StringUtils.isNotEmpty(edate)){
-	sqlWhere += " and  payment.sjfkdate<='"+edate+"'";
-}
+		if(StringUtils.isNotEmpty(sdate)){
+			sqlWhere += " and  payment.sjfkdate>='"+sdate+"'";
+		}
+		
+		if(StringUtils.isNotEmpty(edate)){
+			sqlWhere += " and  payment.sjfkdate<='"+edate+"'";
+		}
 
 	   
 	   Map<String,Object> result = new HashMap<String,Object>();
@@ -602,6 +602,7 @@ if(StringUtils.isNotEmpty(edate)){
 		   }
 		   rs.close();
 		   result.put("stotal", stotal);
+		   result.put("waitPayTotal", stotal.subtract(totalPaid));
 		   result.put("success", true);
 	   } catch(Exception ex) {
 		   result.put("success", false);	
