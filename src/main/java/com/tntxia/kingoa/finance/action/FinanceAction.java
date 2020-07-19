@@ -619,6 +619,38 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
    }
    
    
+   public ModelAndView getGatherDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	   
+	   Map<String,Object> result = new HashMap<String,Object>();
+	   
+	   String id = request.getParameter("id");
+	   
+	   DBConnection db = null;
+	   
+	   try {
+		   String sql = "select * from transportation where ddid = ?";
+		   db = new DBConnection();
+		   ResultSet rs = db.executeQuery(sql, new Object[] {id});
+		   if (rs.next()) {
+			   result.put("sjdate", rs.getString("sjdate"));
+		   }
+		   rs.close();
+		   result.put("success", true);
+	   } catch(Exception ex) {
+		   result.put("success", false);	
+		   result.put("msg", ex.getMessage());
+	   } finally {
+		   if (db != null) {
+			   db.close();
+		   }
+	   }
+	   
+	   WebUtils.writeJson(response, result);
+	   
+	   return null;
+   }
+   
+   
  }
 
 
