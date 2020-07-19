@@ -630,7 +630,9 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
 	   try {
 		   String sql = "select * from transportation where ddid = ?";
 		   db = new DBConnection();
-		   ResultSet rs = db.executeQuery(sql, new Object[] {id});
+		   List<Object> params = new ArrayList<Object>();
+		   params.add(id);
+		   ResultSet rs = db.executeQuery(sql, params);
 		   if (rs.next()) {
 			   result.put("sjdate", rs.getString("sjdate"));
 		   }
