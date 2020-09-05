@@ -594,7 +594,7 @@ public ModelAndView getAdaptItems(HttpServletRequest request, HttpServletRespons
 		   rs.close();
 		   result.put("total", total);
 		   
-		   sql = "select sum(selljg * num) total from cgpro where ddid in (select orderform from payment " + sqlWhere + ") and  ddid in (select id from procure where l_spqk = '已入库' )";
+		   sql = "select sum(selljg * cgpro_num) total from cgpro where ddid in (select orderform from payment " + sqlWhere + ")";
 		   BigDecimal stotal = null;
 		   rs = db.executeQuery(sql);
 		   if (rs.next()) {
