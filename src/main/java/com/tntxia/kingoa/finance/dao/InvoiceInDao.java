@@ -204,9 +204,9 @@ public class InvoiceInDao {
 		}
 
 		if(hasRight) {
-			strSQL = "select "+sqlItems+", procure.sub from invoice_in_view  where wtfk like '"+deptjb+"%' "+whereSql;
+			strSQL = "select "+sqlItems+" from invoice_in_view  where wtfk like '"+deptjb+"%' "+whereSql;
 		} else
-			strSQL = "select "+sqlItems+",procure.sub from invoice_in_view where remark='"+username+"' "+whereSql;
+			strSQL = "select "+sqlItems+" from invoice_in_view where remark='"+username+"' "+whereSql;
 
 		
 		List list = jdbcTemplate.queryForList(SQLServerUtil.generatePagingSQL(strSQL, "id desc", pageVO));
