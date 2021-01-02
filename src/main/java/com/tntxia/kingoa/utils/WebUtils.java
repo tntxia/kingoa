@@ -62,6 +62,9 @@ public class WebUtils {
 	}
 
 	public static String unescape(String src) {
+		if (src == null) {
+			return null;
+		}
 		StringBuffer tmp = new StringBuffer();
 		tmp.ensureCapacity(src.length());
 		int lastPos = 0, pos = 0;
