@@ -117,6 +117,10 @@ public class WebUtils {
 			intPage = java.lang.Integer.parseInt(strPage);
 			if(intPage<1) intPage = 1; 
 		}
+		String strPageSize = request.getParameter("pageSize");
+		if (strPageSize != null) {
+			intPageSize = Integer.parseInt(strPageSize);
+		}
 		PageVO pageVO = new PageVO();
 		pageVO.setPage(intPage);
 		pageVO.setPageSize(intPageSize);
