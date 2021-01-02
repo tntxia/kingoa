@@ -149,7 +149,7 @@ public class InvoiceInDao {
 		String whereSql = "";
 
 		if (purchaseMan!=null && purchaseMan.length() > 0) {
-			whereSql += " and pv.remark like '%" + purchaseMan + "%'";
+			whereSql += " and remark like '%" + purchaseMan + "%'";
 		}
 		
 		String depts = paramBean.getDepts();
@@ -183,10 +183,10 @@ public class InvoiceInDao {
 
 		boolean hasRight = paramBean.isHasViewRight();
 		if (hasRight) {
-			strSQL = "select count(*) from invoice_in_view  where  pv.wtfk like '"
+			strSQL = "select count(*) from invoice_in_view  where  wtfk like '"
 					+ deptjb + "%'" + whereSql;
 		} else
-			strSQL = "select count(*) from invoice_in_view where pv.remark='"
+			strSQL = "select count(*) from invoice_in_view where remark='"
 					+ username + "'" + whereSql;
 		 
 		int total = jdbcTemplate.queryForInt(strSQL);
@@ -204,9 +204,9 @@ public class InvoiceInDao {
 		}
 
 		if(hasRight) {
-			strSQL = "select "+sqlItems+", procure.sub from invoice_in_view  where  payment.wtfk like '"+deptjb+"%' "+whereSql;
+			strSQL = "select "+sqlItems+", procure.sub from invoice_in_view  where wtfk like '"+deptjb+"%' "+whereSql;
 		} else
-			strSQL = "select "+sqlItems+",procure.sub from invoice_in_view where  payment.remark='"+username+"' "+whereSql;
+			strSQL = "select "+sqlItems+",procure.sub from invoice_in_view where remark='"+username+"' "+whereSql;
 
 		
 		List list = jdbcTemplate.queryForList(SQLServerUtil.generatePagingSQL(strSQL, "id desc", pageVO));
