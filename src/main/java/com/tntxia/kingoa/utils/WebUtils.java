@@ -1,10 +1,10 @@
 package com.tntxia.kingoa.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.tntxia.kingoa.common.entity.PageVO;
 import com.tntxia.oa.system.entity.UserInfo;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -105,5 +105,21 @@ public class WebUtils {
 			}
 		}
 		return res;
+	}
+	
+	public static PageVO getPageVO(HttpServletRequest request) {
+		int intPageSize = 50;
+		int intPage = 1;
+		String strPage = request.getParameter("page");
+		if(strPage==null){
+			intPage = 1;
+		} else{
+			intPage = java.lang.Integer.parseInt(strPage);
+			if(intPage<1) intPage = 1; 
+		}
+		PageVO pageVO = new PageVO();
+		pageVO.setPage(intPage);
+		pageVO.setPageSize(intPageSize);
+		return pageVO;
 	}
 }

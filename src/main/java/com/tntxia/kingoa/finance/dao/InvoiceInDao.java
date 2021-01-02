@@ -131,6 +131,112 @@ public class InvoiceInDao {
 		
 	}
 	
+	@SuppressWarnings("rawtypes")
+	public PagingResult<InvoiceIn> listHandled(InvoiceInParamBean paramBean, PageVO pageVO) {
+		
+		String strSQL;
+		String coname = paramBean.getConame();
+		String purchaseMan = paramBean.getPurchaseMan();
+		String epro = paramBean.getEpro();
+		String coNumber = paramBean.getCoNumber();
+		String sub = paramBean.getSub();
+		String sdate = paramBean.getSdate();
+		String edate = paramBean.getEdate();
+		
+		String deptjb = paramBean.getDeptjb();
+		String username = paramBean.getUsername();
+		
+		String whereSql = "";
+
+		if (purchaseMan!=null && purchaseMan.length() > 0) {
+			whereSql += " and pv.remark like '%" + purchaseMan + "%'";
+		}
+		
+		String depts = paramBean.getDepts();
+		if (depts!=null && depts.length() > 0) {
+			whereSql += " and wtfk = '"+depts+"'";
+		}
+
+		if (coname!=null && coname.length() > 0) {
+		  whereSql += " and supplier like '%"+coname+"%'";
+		}
+
+		if(epro!=null && epro.trim().length()>0){
+			whereSql += " and contract in (select number from procure where id in (select ddid from cgpro where epro like '%"+epro+"%') )";
+		}
+
+		if (coNumber!=null && coNumber.length() > 0) {
+		  whereSql += " and contract like '%"+coNumber+"%'";
+		}
+
+		if (sub!=null && sub.length() > 0) {
+		  whereSql += " and sub like '%"+sub+"%'";
+		}
+
+		if(sdate!=null && sdate.trim().length()>0){
+			whereSql += " and sjfkdate>='"+sdate+"'";
+		}
+
+		if(edate!=null && edate.trim().length()>0){
+			whereSql += " and sjfkdate<='"+edate+"'";
+		}
+
+		boolean hasRight = paramBean.isHasViewRight();
+		if (hasRight) {
+			strSQL = "select count(*) from invoice_in_view  where  pv.wtfk like '"
+					+ deptjb + "%'" + whereSql;
+		} else
+			strSQL = "select count(*) from invoice_in_view where pv.remark='"
+					+ username + "'" + whereSql;
+		 
+		int total = jdbcTemplate.queryForInt(strSQL);
+		pageVO.setTotal(total);
+
+		String[] items = new String[] {"id", "orderform", "contract", "sub", "supplier", "sup_number", "moneyty", "receive_time", "number", "amount", "memo"};
+		String sqlItems = null;
+		for(int i=0;i<items.length;i++) {
+		  String item = items[i];
+		  if (sqlItems == null) {
+		    sqlItems = item;
+		  } else {
+		    sqlItems += "," + item;
+		  }
+		}
+
+		if(hasRight) {
+			strSQL = "select "+sqlItems+", procure.sub from invoice_in_view  where  payment.wtfk like '"+deptjb+"%' "+whereSql;
+		} else
+			strSQL = "select "+sqlItems+",procure.sub from invoice_in_view where  payment.remark='"+username+"' "+whereSql;
+
+		
+		List list = jdbcTemplate.queryForList(SQLServerUtil.generatePagingSQL(strSQL, "id desc", pageVO));
+		List<InvoiceIn> data = new ArrayList<InvoiceIn>();
+		for(int i = 0;i<list.size();i++) {
+			Map map = (Map)list.get(i);
+			InvoiceIn invoiceIn = new InvoiceIn();
+			invoiceIn.setId((Integer) map.get("id"));
+			invoiceIn.setContract((String) map.get("contract"));
+			invoiceIn.setSub((String) map.get("sub"));
+			invoiceIn.setCurrent((String) map.get("moneyty"));
+			invoiceIn.setSupplier((String) map.get("supplier"));
+			invoiceIn.setRate((String) map.get("rate"));
+			invoiceIn.setPurchaseMan((String) map.get("remark"));
+			String orderform = (String) map.get("orderform");
+			OrderTotal orderTotal = this.getTotalAmountFromOrderPro(orderform);
+			invoiceIn.setOrderAmount(orderTotal.getOrderAmount());
+			invoiceIn.setWarehouseAmount(orderTotal.getWarehouseAmount());
+			invoiceIn.setPaidAmount((BigDecimal) map.get("htmoney"));
+			invoiceIn.setPayDate((String) map.get("sjfkdate"));
+			data.add(invoiceIn);
+		}
+		
+		PagingResult<InvoiceIn> res = new PagingResult<InvoiceIn>();
+		res.setData(data);
+		res.setPageVO(pageVO);
+		return res;
+		
+	}
+	
 	// 获取订单的总价格
 	@SuppressWarnings("rawtypes")
 	public OrderTotal getTotalAmountFromOrderPro(String orderform) {
