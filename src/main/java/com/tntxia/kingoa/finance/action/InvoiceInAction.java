@@ -33,6 +33,8 @@ public class InvoiceInAction extends CommonAction {
 		String currentDate = DateUtil.getCurrentDateStr();
 			
 		InvoiceInParamBean param = new InvoiceInParamBean();
+		String depts = request.getParameter("depts");
+		param.setDepts(depts);
 		String coname = WebUtils.unescape(request.getParameter("coname"));
 		param.setConame(coname);
 		String cg_man = request.getParameter("cg_man");

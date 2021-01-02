@@ -40,6 +40,11 @@ public class InvoiceInDao {
 		if (purchaseMan!=null && purchaseMan.length() > 0) {
 			whereSql += " and payment.remark like '%" + purchaseMan + "%'";
 		}
+		
+		String depts = paramBean.getDepts();
+		if (depts!=null && depts.length() > 0) {
+			whereSql += " and payment.wtfk = '"+depts+"'";
+		}
 
 		if (coname!=null && coname.length() > 0) {
 		  whereSql += " and payment.supplier like '%"+coname+"%'";

@@ -2,6 +2,9 @@ package com.tntxia.kingoa.finance.entity;
 
 public class InvoiceInParamBean {
 	
+	// 部门
+	private String depts;
+	
 	// 供应商
 	private String coname;
 	
@@ -29,6 +32,16 @@ public class InvoiceInParamBean {
 	private String deptjb;
 	
 	private String username;
+	
+	
+
+	public String getDepts() {
+		return depts;
+	}
+
+	public void setDepts(String depts) {
+		this.depts = depts;
+	}
 
 	public String getConame() {
 		return coname;
