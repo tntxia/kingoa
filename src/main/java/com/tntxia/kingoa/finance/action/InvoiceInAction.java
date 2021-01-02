@@ -10,7 +10,8 @@ import com.tntxia.db.DBConnection;
 import com.tntxia.kingoa.common.entity.PageVO;
 import com.tntxia.kingoa.common.entity.PagingResult;
 import com.tntxia.kingoa.finance.dao.InvoiceInDao;
-import com.tntxia.kingoa.finance.entity.InvoiceIn;
+import com.tntxia.kingoa.finance.entity.InvoiceInHandled;
+import com.tntxia.kingoa.finance.entity.InvoiceInHandling;
 import com.tntxia.kingoa.finance.entity.InvoiceInParamBean;
 import com.tntxia.kingoa.utils.DateUtil;
 import com.tntxia.kingoa.utils.WebUtils;
@@ -83,7 +84,7 @@ public class InvoiceInAction extends CommonAction {
 		pageVO.setPage(intPage);
 		pageVO.setPageSize(intPageSize);
 		
-		PagingResult<InvoiceIn> res = invoiceInDao.listHandling(param, pageVO);
+		PagingResult<InvoiceInHandling> res = invoiceInDao.listHandling(param, pageVO);
 		WebUtils.writeJson(response, res);
 		return null;
 	}
@@ -124,7 +125,7 @@ public class InvoiceInAction extends CommonAction {
 		
 		PageVO pageVO = WebUtils.getPageVO(request);
 		
-		PagingResult<InvoiceIn> res = invoiceInDao.listHandled(param, pageVO);
+		PagingResult<InvoiceInHandled> res = invoiceInDao.listHandled(param, pageVO);
 		WebUtils.writeJson(response, res);
 		return null;
 	}

@@ -2,7 +2,7 @@ package com.tntxia.kingoa.finance.entity;
 
 import java.math.BigDecimal;
 
-public class InvoiceIn {
+public class InvoiceInHandling {
 	
 	private int id;
 	

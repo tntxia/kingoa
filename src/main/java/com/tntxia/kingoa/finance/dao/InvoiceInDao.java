@@ -9,7 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.tntxia.kingoa.common.entity.PageVO;
 import com.tntxia.kingoa.common.entity.PagingResult;
-import com.tntxia.kingoa.finance.entity.InvoiceIn;
+import com.tntxia.kingoa.finance.entity.InvoiceInHandled;
+import com.tntxia.kingoa.finance.entity.InvoiceInHandling;
 import com.tntxia.kingoa.finance.entity.InvoiceInParamBean;
 import com.tntxia.kingoa.finance.entity.OrderTotal;
 import com.tntxia.kingoa.utils.SQLServerUtil;
@@ -21,7 +22,7 @@ public class InvoiceInDao {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) { this.jdbcTemplate = jdbcTemplate; }
 	
 	@SuppressWarnings("rawtypes")
-	public PagingResult<InvoiceIn> listHandling(InvoiceInParamBean paramBean, PageVO pageVO) {
+	public PagingResult<InvoiceInHandling> listHandling(InvoiceInParamBean paramBean, PageVO pageVO) {
 		
 		String strSQL;
 		String coname = paramBean.getConame();
@@ -104,10 +105,10 @@ public class InvoiceInDao {
 
 		
 		List list = jdbcTemplate.queryForList(SQLServerUtil.generatePagingSQL(strSQL, "payment.id desc", pageVO));
-		List<InvoiceIn> data = new ArrayList<InvoiceIn>();
+		List<InvoiceInHandling> data = new ArrayList<InvoiceInHandling>();
 		for(int i = 0;i<list.size();i++) {
 			Map map = (Map)list.get(i);
-			InvoiceIn invoiceIn = new InvoiceIn();
+			InvoiceInHandling invoiceIn = new InvoiceInHandling();
 			invoiceIn.setId((Integer) map.get("id"));
 			invoiceIn.setContract((String) map.get("contract"));
 			invoiceIn.setSub((String) map.get("sub"));
@@ -124,7 +125,7 @@ public class InvoiceInDao {
 			data.add(invoiceIn);
 		}
 		
-		PagingResult<InvoiceIn> res = new PagingResult<InvoiceIn>();
+		PagingResult<InvoiceInHandling> res = new PagingResult<InvoiceInHandling>();
 		res.setData(data);
 		res.setPageVO(pageVO);
 		return res;
@@ -132,7 +133,7 @@ public class InvoiceInDao {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public PagingResult<InvoiceIn> listHandled(InvoiceInParamBean paramBean, PageVO pageVO) {
+	public PagingResult<InvoiceInHandled> listHandled(InvoiceInParamBean paramBean, PageVO pageVO) {
 		
 		String strSQL;
 		String coname = paramBean.getConame();
@@ -210,27 +211,22 @@ public class InvoiceInDao {
 
 		
 		List list = jdbcTemplate.queryForList(SQLServerUtil.generatePagingSQL(strSQL, "id desc", pageVO));
-		List<InvoiceIn> data = new ArrayList<InvoiceIn>();
+		List<InvoiceInHandled> data = new ArrayList<InvoiceInHandled>();
 		for(int i = 0;i<list.size();i++) {
 			Map map = (Map)list.get(i);
-			InvoiceIn invoiceIn = new InvoiceIn();
+			InvoiceInHandled invoiceIn = new InvoiceInHandled();
 			invoiceIn.setId((Integer) map.get("id"));
 			invoiceIn.setContract((String) map.get("contract"));
 			invoiceIn.setSub((String) map.get("sub"));
 			invoiceIn.setCurrent((String) map.get("moneyty"));
 			invoiceIn.setSupplier((String) map.get("supplier"));
-			invoiceIn.setRate((String) map.get("rate"));
-			invoiceIn.setPurchaseMan((String) map.get("remark"));
-			String orderform = (String) map.get("orderform");
-			OrderTotal orderTotal = this.getTotalAmountFromOrderPro(orderform);
-			invoiceIn.setOrderAmount(orderTotal.getOrderAmount());
-			invoiceIn.setWarehouseAmount(orderTotal.getWarehouseAmount());
-			invoiceIn.setPaidAmount((BigDecimal) map.get("htmoney"));
-			invoiceIn.setPayDate((String) map.get("sjfkdate"));
+			invoiceIn.setReceiveDate((String) map.get("receive_time"));
+			invoiceIn.setNumber((String) map.get("number"));
+			invoiceIn.setMemo((String) map.get("memo"));
 			data.add(invoiceIn);
 		}
 		
-		PagingResult<InvoiceIn> res = new PagingResult<InvoiceIn>();
+		PagingResult<InvoiceInHandled> res = new PagingResult<InvoiceInHandled>();
 		res.setData(data);
 		res.setPageVO(pageVO);
 		return res;
