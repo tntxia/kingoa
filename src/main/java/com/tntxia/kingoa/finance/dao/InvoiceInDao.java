@@ -222,6 +222,7 @@ public class InvoiceInDao {
 			invoiceIn.setSupplier((String) map.get("supplier"));
 			invoiceIn.setReceiveDate((String) map.get("receive_time"));
 			invoiceIn.setNumber((String) map.get("number"));
+			invoiceIn.setAmount((BigDecimal) map.get("amount"));
 			invoiceIn.setMemo((String) map.get("memo"));
 			data.add(invoiceIn);
 		}
