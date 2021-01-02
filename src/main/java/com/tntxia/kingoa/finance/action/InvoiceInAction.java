@@ -37,7 +37,7 @@ public class InvoiceInAction extends CommonAction {
 		param.setDepts(depts);
 		String coname = WebUtils.unescape(request.getParameter("coname"));
 		param.setConame(coname);
-		String cg_man = request.getParameter("cg_man");
+		String cg_man = WebUtils.unescape(request.getParameter("cg_man"));
 		param.setPurchaseMan(cg_man);
 		String coNumber=request.getParameter("co_number");
 		param.setCoNumber(coNumber);
