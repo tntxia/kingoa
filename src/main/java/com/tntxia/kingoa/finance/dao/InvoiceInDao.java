@@ -258,5 +258,10 @@ public class InvoiceInDao {
 		total.setWarehouseAmount(warehouseAmount);
 		return total;
 	}
+	
+	public void delete(String id) {
+		String sql = "delete from payment_invoice_in where id = " + id;
+		jdbcTemplate.update(sql);
+	}
 
 }

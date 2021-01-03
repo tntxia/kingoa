@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tntxia.db.DBConnection;
+import com.tntxia.kingoa.common.entity.CommonResult;
 import com.tntxia.kingoa.common.entity.PageVO;
 import com.tntxia.kingoa.common.entity.PagingResult;
 import com.tntxia.kingoa.finance.dao.InvoiceInDao;
@@ -119,6 +120,15 @@ public class InvoiceInAction extends CommonAction {
 		PageVO pageVO = WebUtils.getPageVO(request);
 		
 		PagingResult<InvoiceInHandled> res = invoiceInDao.listHandled(param, pageVO);
+		WebUtils.writeJson(response, res);
+		return null;
+	}
+	
+	public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String id = request.getParameter("id");
+		invoiceInDao.delete(id);
+		CommonResult res = new CommonResult();
+		res.setSuccess(true);
 		WebUtils.writeJson(response, res);
 		return null;
 	}
