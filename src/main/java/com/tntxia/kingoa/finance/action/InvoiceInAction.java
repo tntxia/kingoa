@@ -11,8 +11,9 @@ import com.tntxia.kingoa.common.entity.PageVO;
 import com.tntxia.kingoa.common.entity.PagingResult;
 import com.tntxia.kingoa.finance.dao.InvoiceInDao;
 import com.tntxia.kingoa.finance.entity.InvoiceInHandled;
+import com.tntxia.kingoa.finance.entity.InvoiceInHandledParamBean;
 import com.tntxia.kingoa.finance.entity.InvoiceInHandling;
-import com.tntxia.kingoa.finance.entity.InvoiceInParamBean;
+import com.tntxia.kingoa.finance.entity.InvoiceInHandlingParamBean;
 import com.tntxia.kingoa.utils.DateUtil;
 import com.tntxia.kingoa.utils.WebUtils;
 import com.tntxia.oa.system.entity.UserInfo;
@@ -40,7 +41,7 @@ public class InvoiceInAction extends CommonAction {
 		String startDate = "2020-11-01";
 		String currentDate = DateUtil.getCurrentDateStr();
 			
-		InvoiceInParamBean param = new InvoiceInParamBean();
+		InvoiceInHandlingParamBean param = new InvoiceInHandlingParamBean();
 		String depts = request.getParameter("depts");
 		param.setDepts(depts);
 		String coname = WebUtils.unescape(request.getParameter("coname"));
@@ -66,23 +67,11 @@ public class InvoiceInAction extends CommonAction {
 		boolean hasRight = WebUtils.hasRight(request, "fkview");
 		param.setHasViewRight(hasRight);
 		
-		int intPageSize = 50;
-		int intPage = 1;
-		String strPage = request.getParameter("page");
-		if(strPage==null){
-			intPage = 1;
-		} else{
-			intPage = java.lang.Integer.parseInt(strPage);
-			if(intPage<1) intPage = 1; 
-		}
-		
 		UserInfo userInfo = WebUtils.getUserInfo(request);
 		param.setDeptjb(userInfo.getDeptjb());
 		param.setUsername(userInfo.getUsername());
 		
-		PageVO pageVO = new PageVO();
-		pageVO.setPage(intPage);
-		pageVO.setPageSize(intPageSize);
+		PageVO pageVO = WebUtils.getPageVO(request);
 		
 		PagingResult<InvoiceInHandling> res = invoiceInDao.listHandling(param, pageVO);
 		WebUtils.writeJson(response, res);
@@ -98,7 +87,7 @@ public class InvoiceInAction extends CommonAction {
 	 */
 	public ModelAndView listHandled(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		InvoiceInParamBean param = new InvoiceInParamBean();
+		InvoiceInHandledParamBean param = new InvoiceInHandledParamBean();
 		String depts = request.getParameter("depts");
 		param.setDepts(depts);
 		String coname = WebUtils.unescape(request.getParameter("coname"));
@@ -115,6 +104,10 @@ public class InvoiceInAction extends CommonAction {
 		param.setSdate(sdate);
 		String edate=request.getParameter("edate");
 		param.setEdate(edate);
+		String number = request.getParameter("number");
+		param.setNumber(number);
+		String memo = request.getParameter("memo");
+		param.setMemo(memo);
 		
 		boolean hasRight = WebUtils.hasRight(request, "fkview");
 		param.setHasViewRight(hasRight);

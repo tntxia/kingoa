@@ -1,6 +1,6 @@
 package com.tntxia.kingoa.finance.entity;
 
-public class InvoiceInParamBean {
+public class InvoiceInHandlingParamBean {
 	
 	// 部门
 	private String depts;

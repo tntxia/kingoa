@@ -10,8 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.tntxia.kingoa.common.entity.PageVO;
 import com.tntxia.kingoa.common.entity.PagingResult;
 import com.tntxia.kingoa.finance.entity.InvoiceInHandled;
+import com.tntxia.kingoa.finance.entity.InvoiceInHandledParamBean;
 import com.tntxia.kingoa.finance.entity.InvoiceInHandling;
-import com.tntxia.kingoa.finance.entity.InvoiceInParamBean;
+import com.tntxia.kingoa.finance.entity.InvoiceInHandlingParamBean;
 import com.tntxia.kingoa.finance.entity.OrderTotal;
 import com.tntxia.kingoa.utils.SQLServerUtil;
 
@@ -22,7 +23,7 @@ public class InvoiceInDao {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) { this.jdbcTemplate = jdbcTemplate; }
 	
 	@SuppressWarnings("rawtypes")
-	public PagingResult<InvoiceInHandling> listHandling(InvoiceInParamBean paramBean, PageVO pageVO) {
+	public PagingResult<InvoiceInHandling> listHandling(InvoiceInHandlingParamBean paramBean, PageVO pageVO) {
 		
 		String strSQL;
 		String coname = paramBean.getConame();
@@ -133,7 +134,7 @@ public class InvoiceInDao {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public PagingResult<InvoiceInHandled> listHandled(InvoiceInParamBean paramBean, PageVO pageVO) {
+	public PagingResult<InvoiceInHandled> listHandled(InvoiceInHandledParamBean paramBean, PageVO pageVO) {
 		
 		String strSQL;
 		String coname = paramBean.getConame();
@@ -146,6 +147,9 @@ public class InvoiceInDao {
 		
 		String deptjb = paramBean.getDeptjb();
 		String username = paramBean.getUsername();
+		
+		String number = paramBean.getNumber();
+		String memo = paramBean.getMemo();
 		
 		String whereSql = "";
 
@@ -175,11 +179,19 @@ public class InvoiceInDao {
 		}
 
 		if(sdate!=null && sdate.trim().length()>0){
-			whereSql += " and sjfkdate>='"+sdate+"'";
+			whereSql += " and receive_time >= '" + sdate + "'";
 		}
 
 		if(edate!=null && edate.trim().length()>0){
-			whereSql += " and sjfkdate<='"+edate+"'";
+			whereSql += " and receive_time <= '"+edate+"'";
+		}
+		
+		if(number!=null && number.trim().length()>0){
+			whereSql += " and number like '%"+number+"%'";
+		}
+		
+		if(memo!=null && memo.trim().length()>0){
+			whereSql += " and memo like '%"+memo+"%'";
 		}
 
 		boolean hasRight = paramBean.isHasViewRight();
