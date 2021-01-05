@@ -1,7 +1,137 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN" "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+	
+	<taglib>
+		<taglib-uri>/WEB-INF/sendmail.tld</taglib-uri>
+		<taglib-location>/WEB-INF/sendmail.tld</taglib-location>
+	</taglib>
+	
+	<servlet>
+		<servlet-name>initOperation</servlet-name>
+		<servlet-class>com.tntxia.oa.servlet.InitServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- 下载文件的Servlet -->
+	<servlet>
+		<display-name>doAction</display-name>
+		<servlet-name>ActionServlet</servlet-name>
+		<servlet-class>com.tntxia.oa.servlet.ActionServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>download</servlet-name>
+		<servlet-class>com.tntxia.oa.servlet.Download</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+ 			<param-name>contextConfigLocation</param-name>
+ 			<param-value>
+ 				/WEB-INF/db.xml,
+ 				/WEB-INF/main-servlet.xml,
+				/WEB-INF/warehouse-servlet.xml,
+				/WEB-INF/system-dao.xml,
+				/WEB-INF/system-action.xml,
+				/WEB-INF/purchasing-servlet.xml,
+				/WEB-INF/setting-action.xml,
+				/WEB-INF/qc-dao.xml,
+				/WEB-INF/qc-action.xml,
+				/WEB-INF/sale-dao.xml,
+				/WEB-INF/sale-action.xml,
+				/WEB-INF/finance-dao.xml,
+				/WEB-INF/finance-action.xml,
+			</param-value>
+ 		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>*.dispatch</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>download</servlet-name>
+		<url-pattern>/download</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ActionServlet</servlet-name>
+		<url-pattern>/action.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>freemarker</servlet-name>
+		<servlet-class>freemarker.ext.servlet.FreemarkerServlet</servlet-class>
+		<init-param>
+			<param-name>TemplatePath</param-name>
+			<param-value>/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>NoCache</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ContentType</param-name>
+			<param-value>text/html;charset=GB2312</param-value>
+		</init-param>
+		<init-param>
+			<param-name>template_update_delay</param-name>
+			<param-value>0</param-value>
+		</init-param>
+		<init-param>
+			<param-name>default_encoding</param-name>
+			<param-value>GB2312</param-value>
+		</init-param>
+		<init-param>
+			<param-name>number_format</param-name>
+			<param-value>0.##########</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>freemarker</servlet-name>
+		<url-pattern>*.ftl</url-pattern>
+	</servlet-mapping>
+	
+	<listener>  
+    	<listener-class>com.tntxia.oa.listener.UserLoginListener</listener-class>  
+	</listener>
+	
+	<filter>    
+        <filter-name>encodingFilter</filter-name>    
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>    
+        <init-param>    
+            <param-name>encoding</param-name>    
+            <param-value>GB2312</param-value>    
+        </init-param>    
+        <init-param>    
+            <param-name>forceEncoding</param-name>    
+            <param-value>true</param-value>    
+        </init-param>    
+    </filter>    
+    
+    <filter-mapping>    
+        <filter-name>encodingFilter</filter-name>    
+        <url-pattern>/*</url-pattern>    
+    </filter-mapping>  
+    
+    <filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>sessionFilter</filter-name>
+		<filter-class>com.tntxia.oa.login.filter.SessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>sessionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
 </web-app>
+
