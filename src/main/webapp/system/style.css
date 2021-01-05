@@ -1,0 +1,9 @@
+a:link {font-size:12.5px;color: #0000FF;text-decoration:none;}
+a:visited {font-size:12.5px;color: #0000FF;text-decoration:none;}
+a:hover	{font-size:12.5px;color: #0000FF;text-decoration:underline;}
+a:active {color: red }
+
+body {background-color: #ffffff; color:#0000FF} 
+td {color:#0000FF}
+p {font-size:14.5px;line-height:160%; color:white}
+
