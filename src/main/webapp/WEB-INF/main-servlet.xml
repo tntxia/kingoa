@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/main.dispatch">mainController</prop>
+			
+				<prop key="/login.dispatch">loginController</prop>
+				<prop key="/logout.dispatch">logoutController</prop>
+
+				<prop key="/warehouse/warehouse.dispatch">warehouseController</prop>
+				<prop key="/warehouse/pro.dispatch">proController</prop>
+				<prop key="/warehouse/proview.dispatch">proViewController</prop>
+				<prop key="/warehouse/proedit.dispatch">proEditController</prop>
+				<prop key="/warehouse/doproeditchange.dispatch">doProChangeController</prop>
+
+				<prop key="/warehouse/in/cancelRk.dispatch">cancelRkController</prop>
+
+				<prop key="/warehouse/in/viewRk.dispatch">viewRkController</prop>
+				<prop key="/warehouse/pd/viewPdResult.dispatch">viewPdController</prop>
+				<prop key="/warehouse/pd/exportPd.dispatch">exportPdController</prop>
+				<prop key="/warehouse/pd/pd.dispatch">pdController</prop>
+				<prop key="/warehouse/pd/pdProcess.dispatch">pdProcessController</prop>
+				<prop key="/warehouse/pd/pdDetailRk.dispatch">pdDetailRkController</prop>
+				<prop key="/warehouse/pd/cancelRk.dispatch">pdCancelRkController</prop>
+
+
+				<prop key="/viewSystemInfo.dispatch">viewSystemInfoController</prop>
+				<prop key="/toUpdateSystemInfo.dispatch">toUpdateSystemInfoController</prop>
+				<prop key="/updateSystemInfo.dispatch">updateSystemInfoController</prop>
+
+				<prop key="/purchasingView.dispatch">purchasingViewController</prop>
+				<prop key="/purchasing/purchasing.dispatch">purchasingController</prop>
+				<prop key="/purchasing/refund.dispatch">purchasingRefundController</prop>
+
+				<!-- 与系统管理相关的路径  start -->
+				<prop key="/system/right/rightManage.dispatch">rightManageController</prop>
+				<prop key="/system/right/rightAdd.dispatch">rightAddController</prop>
+				<prop key="/system/right/rightUpdate.dispatch">rightUpdateController</prop>
+				<prop key="/system/right/roleRight.dispatch">roleRightController</prop>
+				<prop key="/system/right/updateRoleRight.dispatch">updateRoleRightController</prop>
+				<prop key="/system/role.dispatch">roleController</prop>
+				<prop key="/system/restrain.dispatch">restrainController</prop>
+				<prop key="/system/department.dispatch">departmentController</prop>
+				<prop key="/system/user/user.dispatch">userController</prop>
+				<prop key="/system/knowledge/knowledge.dispatch">knowledgeController</prop>
+				<prop key="/system/account/account.dispatch">accountController</prop>
+				<prop key="/system/contact_template/template.dispatch">contactTemplateController</prop>
+				<prop key="/system/notice/notice.dispatch">noticeController</prop>
+				<prop key="/system/position.dispatch">positionController</prop>
+				<prop key="/system/manageItem.dispatch">manageItemController</prop>
+				<prop key="/system/country.dispatch">countryController</prop>
+				<prop key="/system/warehouse.dispatch">warehouseSysController</prop>
+				<!-- 与系统管理相关的路径  end -->
+
+				<prop key="/setting/setting.dispatch">settingController</prop>
+
+				<prop key="/qc/qc.dispatch">qcController</prop>
+
+				<prop key="/sale/sale.dispatch">saleController</prop>
+
+				<prop key="/finance/finance.dispatch">financeController</prop>
+
+                <prop key="/finance/invoiceIn.dispatch">financeInvoiceInController</prop>
+				
+				<prop key="/mail.dispatch">mailController</prop>
+				
+				<prop key="/user/user.dispatch">userController2</prop>
+
+			</props>
+		</property>
+	</bean>
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<!-- 在多方法Action中，方法调用的解决方案 -->
+	<bean id="paraMethodResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName">
+			<value>method</value>
+		</property>
+		<property name="defaultMethodName">
+			<value>list</value>
+		</property>
+	</bean>
+
+	<!-- 用户登陆 -->
+	<bean id="loginController" class="com.tntxia.kingoa.login.action.LoginAction"
+		autowire="byName"></bean>
+		
+	<!-- 用户退出登陆 -->
+	<bean id="logoutController" class="com.tntxia.oa.login.action.LogoutAction"></bean>
+		
+	<!-- 公用功能的控制器-->
+	<bean id="mainController" class="com.tntxia.oa.main.action.MainAction" autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 邮件 -->
+	<bean id="mailController" class="com.tntxia.oa.mail.action.MailAction" autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+
+	<!-- 邮件 -->
+	<bean id="numberFactory" class="com.tntxia.kingoa.common.factory.NumberFactory" autowire="byName"></bean>
+
+</beans>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="purchasingDao" class="com.tntxia.oa.purchasing.dao.PurchasingDao" autowire="byName"></bean>
+
+	<bean id="purchasingProductDao" class="com.tntxia.oa.purchasing.dao.PurchasingProductDao" autowire="byName"></bean>
+
+	<bean id="purchasingRefundDao" class="com.tntxia.kingoa.purchasing.dao.PurchasingRefundDao" autowire="byName"></bean>
+	
+	<bean id="unitDao" class="com.tntxia.oa.purchasing.dao.UnitDao"></bean>
+
+	<!-- 采购订单管理 start -->
+	<bean id="purchasingViewController" class="com.tntxia.oa.purchasing.action.PurchasingViewAction"
+		autowire="byName"></bean>
+	<!-- 采购订单管理 start -->
+	
+	<!-- 采购管理控制器 -->
+	<bean id="purchasingController" class="com.tntxia.oa.purchasing.action.PurchasingAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+
+	<!-- 采购退货控制器 -->
+	<bean id="purchasingRefundController" class="com.tntxia.kingoa.purchasing.action.RefundAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+
+</beans>

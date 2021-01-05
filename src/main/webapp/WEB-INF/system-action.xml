@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="viewSystemInfoController" class="com.tntxia.oa.mvc.actions.ViewSystemInfoAction"
+		autowire="byName"></bean>
+	<bean id="toUpdateSystemInfoController" class="com.tntxia.oa.system.action.ToUpdateSystemInfoAction"
+		autowire="byName"></bean>
+	<bean id="updateSystemInfoController" class="com.tntxia.oa.system.action.UpdateSystemInfoAction"
+		autowire="byName"></bean>
+
+	
+
+	<!-- 权限管理 -->
+	<bean id="rightManageController" class="com.tntxia.oa.system.action.RightManageAction"
+		autowire="byName"></bean>
+
+	<!-- 权限增加 -->
+	<bean id="rightAddController" class="com.tntxia.oa.system.action.RightAddAction"
+		autowire="byName"></bean>
+
+	<!-- 权限修改 -->
+	<bean id="rightUpdateController" class="com.tntxia.oa.system.action.RightUpdateAction"
+		autowire="byName"></bean>
+
+	<!-- 权限修改 -->
+	<bean id="roleRightController" class="com.tntxia.oa.system.action.RoleRightAction"
+		autowire="byName"></bean>
+
+	<!-- 权限修改 -->
+	<bean id="updateRoleRightController" class="com.tntxia.oa.system.action.RoleRightUpdateAction"
+		autowire="byName"></bean>
+
+	<!-- 权限修改 -->
+	<bean id="roleController" class="com.tntxia.oa.system.action.RoleAction"
+		autowire="byName"></bean>
+
+	<!-- 权限修改 -->
+	<bean id="restrainController" class="com.tntxia.oa.system.action.RestrainAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+
+	<!-- 权限修改 -->
+	<bean id="departmentController" class="com.tntxia.oa.system.action.DepartmentAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+
+	<!-- 用户管理控制器 -->
+	<bean id="userController" class="com.tntxia.oa.system.action.UserAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 用户管理控制器 -->
+	<bean id="userController2" class="com.tntxia.kingoa.user.action.UserAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 知识库管理控制器 -->
+	<bean id="knowledgeController" class="com.tntxia.oa.system.action.KnowledgeAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 财务科目控制器 -->
+	<bean id="accountController" class="com.tntxia.oa.system.action.FinanceAccountAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 货币类型控制器 -->
+	<bean id="currentTypeController" class="com.tntxia.oa.system.action.CurrentTypeAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 合同模板控制器 -->
+	<bean id="contactTemplateController" class="com.tntxia.oa.system.action.ContactTemplateAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 公告控制器 -->
+	<bean id="noticeController" class="com.tntxia.oa.system.action.NoticeAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 职位控制器 -->
+	<bean id="positionController" class="com.tntxia.oa.system.action.PositionAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 管理员登陆 -->
+	<bean id="managerLoginController" class="com.tntxia.oa.system.action.ManagerLoginAction"
+		autowire="byName">
+	</bean>
+	
+	<!-- 管理项 -->
+	<bean id="manageItemController" class="com.tntxia.oa.system.action.ManageItemAction">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 国家管理 -->
+	<bean id="countryController" class="com.tntxia.oa.system.action.CountryAction">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 仓库管理 -->
+	<bean id="warehouseSysController" class="com.tntxia.oa.system.action.WarehouseAction"
+	autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+
+</beans>

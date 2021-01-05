@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+    
+	<bean id="cancelRkController" class="com.tntxia.oa.mvc.actions.CancelRkAction"></bean>
+	<bean id="viewRkController" class="com.tntxia.oa.warehouse.action.ViewRkAction" autowire="byName"></bean>
+	
+	<bean id="warehouseDao" class="com.tntxia.oa.warehouse.dao.WarehouseDao"></bean>
+	
+	<bean id="viewPdController" class="com.tntxia.oa.mvc.actions.ViewPdResultAction"></bean>
+	<bean id="pdDetailRkController" class="com.tntxia.oa.warehouse.action.ViewPdRkDetailAction" autowire="byName"></bean>
+	<bean id="exportPdController" class="com.tntxia.oa.mvc.actions.ExportPdAction"></bean>
+	<bean id="pdController" class="com.tntxia.oa.mvc.actions.PdAction"></bean>
+	<bean id="pdProcessController" class="com.tntxia.oa.mvc.actions.PdProcessAction"></bean>
+	<bean id="pdCancelRkController" class="com.tntxia.oa.warehouse.action.PdCancelRkAction" autowire="byName"></bean>
+	
+	<bean id="proViewController" class="com.tntxia.oa.warehouse.action.ProViewAction" autowire="byName"></bean>
+	<bean id="proEditController" class="com.tntxia.oa.warehouse.action.ProEditAction" autowire="byName"></bean>
+	<bean id="doProChangeController" class="com.tntxia.oa.warehouse.action.DoProChangeAction" autowire="byName"></bean>
+	
+	<bean id="proController" class="com.tntxia.oa.warehouse.action.ProAction" autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<bean id="warehouseController" class="com.tntxia.oa.warehouse.action.WarehouseAction" autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+</beans>

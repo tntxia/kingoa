@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="viewSystemInfoController" class="com.tntxia.oa.mvc.actions.ViewSystemInfoAction"
+		autowire="byName"></bean>
+	<bean id="toUpdateSystemInfoController" class="com.tntxia.oa.system.action.ToUpdateSystemInfoAction"
+		autowire="byName"></bean>
+	<bean id="updateSystemInfoController" class="com.tntxia.oa.system.action.UpdateSystemInfoAction"
+		autowire="byName"></bean>
+
+	<bean id="rightDao" class="com.tntxia.oa.system.dao.RightDao"></bean>
+	<bean id="roleDao" class="com.tntxia.oa.system.dao.RoleDao"></bean>
+	<bean id="departmentDao" class="com.tntxia.oa.system.dao.DepartmentDao"></bean>
+	<bean id="userDao" class="com.tntxia.oa.system.dao.UserDao"></bean>
+	<bean id="approvalProcessDao" class="com.tntxia.oa.system.dao.ApprovalProcessDao"></bean>
+	<bean id="knowledgeDao" class="com.tntxia.oa.system.dao.KnowledgeDao"></bean>
+
+	<!-- 权限管理 -->
+	<bean id="rightManageController" class="com.tntxia.oa.system.action.RightManageAction"
+		autowire="byName"></bean>
+
+	<!-- 权限增加 -->
+	<bean id="rightAddController" class="com.tntxia.oa.system.action.RightAddAction"
+		autowire="byName"></bean>
+
+	<!-- 权限修改 -->
+	<bean id="rightUpdateController" class="com.tntxia.oa.system.action.RightUpdateAction"
+		autowire="byName"></bean>
+
+	<!-- 权限修改 -->
+	<bean id="roleRightController" class="com.tntxia.oa.system.action.RoleRightAction"
+		autowire="byName"></bean>
+
+	<!-- 权限修改 -->
+	<bean id="updateRoleRightController" class="com.tntxia.oa.system.action.RoleRightUpdateAction"
+		autowire="byName"></bean>
+
+	<!-- 权限修改 -->
+	<bean id="roleController" class="com.tntxia.oa.system.action.RoleAction"
+		autowire="byName"></bean>
+
+	<!-- 权限修改 -->
+	<bean id="restrainController" class="com.tntxia.oa.system.action.RestrainAction"
+		autowire="byName"></bean>
+
+	<!-- 权限修改 -->
+	<bean id="departmentController" class="com.tntxia.oa.system.action.DepartmentAction"
+		autowire="byName"></bean>
+
+	<!-- 在多方法Action中，方法调用的解决方案 -->
+	<bean id="paraMethodResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName">
+			<value>method</value>
+		</property>
+		<property name="defaultMethodName">
+			<value>list</value>
+		</property>
+	</bean>
+
+	<!-- 用户管理控制器 -->
+	<bean id="userController" class="com.tntxia.oa.system.action.UserAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+	
+	<!-- 知识库管理控制器 -->
+	<bean id="knowledgeController" class="com.tntxia.oa.system.action.KnowledgeAction"
+		autowire="byName">
+		<property name="methodNameResolver">
+			<ref bean="paraMethodResolver" />
+		</property>
+	</bean>
+
+</beans>

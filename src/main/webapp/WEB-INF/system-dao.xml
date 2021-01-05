@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+	<bean id="systemDao" class="com.tntxia.oa.system.dao.SystemDao"></bean>
+    <bean id="currentTypeDao" class="com.tntxia.oa.system.dao.CurrentTypeDao" autowire="byName"></bean>
+    <bean id="unitTypeDao" class="com.tntxia.oa.system.dao.UnitTypeDao"></bean>
+    <bean id="productTypeDao" class="com.tntxia.oa.system.dao.ProductTypeDao"></bean>
+    <bean id="userDao" class="com.tntxia.oa.system.dao.UserDao" autowire="byName"></bean>
+	<bean id="userDao2" class="com.tntxia.kingoa.user.dao.UserDao" autowire="byName"></bean>
+	<bean id="loginDao" class="com.tntxia.kingoa.login.dao.LoginDao" autowire="byName"></bean>
+	<bean id="financeAccountDao" class="com.tntxia.oa.system.dao.FinanceAccountDao"></bean>
+	
+	<bean id="rightDao" class="com.tntxia.oa.system.dao.RightDao" autowire="byName"></bean>
+	<bean id="roleDao" class="com.tntxia.oa.system.dao.RoleDao"></bean>
+	<bean id="departmentDao" class="com.tntxia.oa.system.dao.DepartmentDao" autowire="byName"></bean>
+	<bean id="approvalProcessDao" class="com.tntxia.oa.system.dao.ApprovalProcessDao"></bean>
+	<bean id="knowledgeDao" class="com.tntxia.oa.system.dao.KnowledgeDao"></bean>
+	
+	<bean id="contactTemplateDao" class="com.tntxia.oa.system.dao.ContactTemplateDao" autowire="byName"></bean>
+	
+	<bean id="noticeDao" class="com.tntxia.oa.system.dao.NoticeDao" autowire="byName"></bean>
+	
+	<bean id="positionDao" class="com.tntxia.oa.system.dao.PositionDao" autowire="byName"></bean>
+	
+	<bean id="mailDao" class="com.tntxia.oa.mail.dao.MailDao" autowire="byName"></bean>
+	
+	<bean id="warehouseSysDao" class="com.tntxia.oa.system.dao.WarehouseDao" autowire="byName"></bean>
+	
+</beans>
