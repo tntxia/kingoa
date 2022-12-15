@@ -61,7 +61,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<scope>system</scope>
-			<version>1.0</version>
+			<version>5.2.20.RELEASE</version>
 			<systemPath>${pom.basedir}/lib/spring-webmvc.jar</systemPath>
 		</dependency>
 		<dependency>
